@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>শুভ জন্মদিন🌸</title>
+  
+  <!-- Google Fonts for modern typography & Indian scripts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;600;700;800&family=Great+Vibes&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti Library for smooth physics particle celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: 'Outfit', 'Anek Bangla', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 20%, #ffeaf1 0%, #ffd6e0 40%, #ffccd5 80%, #fff0f3 100%);
+    }
+
+    .assamese-font {
+      font-family: 'Anek Bangla', 'Outfit', sans-serif;
+    }
+
+    .script-font {
+      font-family: 'Great Vibes', cursive;
+    }
+
+    /* Ambient drifting balloons background */
+    .balloons-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -120px;
+      opacity: 0.85;
+      animation: floatUp 10s ease-in infinite;
+      user-select: none;
+      filter: drop-shadow(0 8px 12px rgba(255, 105, 180, 0.25));
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.85;
+      }
+      90% {
+        opacity: 0.85;
+      }
+      100% {
+        transform: translateY(-115vh) rotate(18deg) scale(1.05);
+        opacity: 0;
+      }
+    }
+
+    /* Gentle pulsing glow on the photo card */
+    @keyframes softGlow {
+      0%, 100% {
+        box-shadow: 0 0 25px rgba(255, 77, 109, 0.45), 0 15px 35px rgba(255, 117, 143, 0.3);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(255, 77, 109, 0.7), 0 20px 45px rgba(255, 77, 109, 0.45);
+        transform: scale(1.015);
+      }
+    }
+
+    .photo-glow {
+      animation: softGlow 4s ease-in-out infinite;
+    }
+
+    /* Shimmer effect for the Assamese title */
+    .shimmer-text {
+      background: linear-gradient(120deg, #d6336c 0%, #ff4d6d 50%, #c9184a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Floating sparkle particles */
+    .sparkle {
+      position: absolute;
+      animation: sparkleTwinkle 2.5s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes sparkleTwinkle {
+      0% { transform: scale(0.6) rotate(0deg); opacity: 0.3; }
+      100% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+    }
+  </style>
+</head>
+<body class="relative flex items-center justify-center p-4 sm:p-6 min-h-screen">
+
+  <!-- Background Floating Balloons Layer -->
+  <div class="balloons-container" id="balloonsContainer"></div>
+
+  <!-- Main Card Container -->
+  <div class="relative z-10 w-full max-w-md mx-auto my-auto">
+    <div class="backdrop-blur-xl bg-white/85 rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/60 text-center relative overflow-hidden transition-all duration-300">
+      
+      <!-- Sparkle Ornaments -->
+      <span class="sparkle top-4 left-6 text-xl">✨</span>
+      <span class="sparkle top-8 right-8 text-2xl" style="animation-delay: 1s;">🌸</span>
+      <span class="sparkle bottom-8 left-8 text-xl" style="animation-delay: 0.5s;">💖</span>
+      <span class="sparkle bottom-5 right-6 text-2xl" style="animation-delay: 1.5s;">✨</span>
+
+      <!-- Tag Badge -->
+      <div class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-rose-100/90 text-rose-700 text-sm font-semibold tracking-wide mb-5 border border-rose-200/70 shadow-sm assamese-font">
+        <span>🎂</span>
+        <span>জন্মদিনৰ শুভকামনা</span>
+        <span>✨</span>
+      </div>
+
+      <!-- Framed Photo with continuous glow & smooth fallback -->
+      <div class="relative w-56 sm:w-64 h-72 sm:h-80 mx-auto mb-6 rounded-2xl overflow-hidden border-4 border-white photo-glow">
+        <img 
+          id="sisterPhoto"
+          src="sister.jpg" 
+          alt="Birthday Sister" 
+          class="w-full h-full object-cover object-top transition duration-500"
+          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80';"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent pointer-events-none"></div>
+      </div>
+
+      <!-- Main Birthday Heading -->
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-1 text-gray-800">
+        Happy Birthday, <span class="shimmer-text assamese-font"></span> 🌸
+      </h2>
+      <p class="script-font text-2xl text-rose-500 mb-4 tracking-wide">Wishing you the best day ever</p>
+
+      <!-- Heartfelt Assamese Wish Box -->
+      <div class="bg-gradient-to-r from-rose-50/90 via-pink-50/80 to-rose-50/90 rounded-2xl p-4 sm:p-5 border border-rose-200/60 mb-6 shadow-inner">
+        <p class="assamese-font text-gray-800 text-base sm:text-lg font-medium leading-relaxed">
+          "তোৰ জীৱনৰ প্ৰতিটো দিন হাঁহি আৰু সুখেৰে উপচি পৰক। ওপজা দিনৰ অশেষ শুভকামন ।"
+        </p>
+      </div>
+
+      <!-- Interactive Extra Confetti Blast Trigger -->
+      <div class="flex flex-col gap-2 items-center">
+        <button 
+          id="boostConfettiBtn" 
+          class="w-full sm:w-auto px-7 py-3 rounded-full bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 hover:from-rose-600 hover:to-pink-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-pink-500/30 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 assamese-font cursor-pointer"
+        >
+          <span>🎉</span> 🎉
+        </button>
+        <span class="text-xs text-rose-400 mt-1 font-medium">✨🎉 ✨</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       1. CONTINUOUS AUTOMATIC CELEBRATION (CONFETTI LOOP)
+       Runs immediately from page load indefinitely using requestAnimationFrame
+       ========================================================================= */
+    const celebrationColors = ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffd166', '#06d6a0', '#118ab2', '#c77dff'];
+
+    function continuousCelebrationLoop() {
+      // Left side fountain
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0, y: 0.7 },
+        colors: celebrationColors,
+        ticks: 300,
+        gravity: 0.7,
+        scalar: 0.9,
+        disableForReducedMotion: true
+      });
+
+      // Right side fountain
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1, y: 0.7 },
+        colors: celebrationColors,
+        ticks: 300,
+        gravity: 0.7,
+        scalar: 0.9,
+        disableForReducedMotion: true
+      });
+
+      // Continuous gentle sky rain
+      if (Math.random() < 0.25) {
+        confetti({
+          particleCount: 3,
+          startVelocity: 0,
+          ticks: 200,
+          origin: {
+            x: Math.random(),
+            y: Math.random() * 0.2 - 0.1
+          },
+          colors: celebrationColors,
+          gravity: 0.5,
+          scalar: 0.8,
+          drift: (Math.random() - 0.5) * 1.5
+        });
+      }
+
+      requestAnimationFrame(continuousCelebrationLoop);
+    }
+
+    // Launch celebration as soon as script evaluates
+    window.addEventListener('load', () => {
+      continuousCelebrationLoop();
+      // Initial celebratory welcoming blast
+      setTimeout(() => {
+        burstConfetti(0.5, 0.4);
+      }, 500);
+    });
+
+    /* =========================================================================
+       2. FLOATING BALLOONS GENERATOR
+       Drifts pastel festive balloons upward repeatedly
+       ========================================================================= */
+    const balloonEmojis = ['🎈', '💖', '🌸', '✨', '🎈', '🎉', '💐'];
+    const balloonsContainer = document.getElementById('balloonsContainer');
+
+    function spawnBalloon() {
+      const balloon = document.createElement('div');
+      balloon.className = 'balloon';
+      
+      const emoji = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+      balloon.textContent = emoji;
+      
+      // Random horizontal start, size, and duration
+      const leftPos = Math.random() * 95; // %
+      const duration = 7 + Math.random() * 6; // 7s to 13s
+      const size = 1.3 + Math.random() * 1.5; // rem
+      
+      balloon.style.left = `${leftPos}vw`;
+      balloon.style.fontSize = `${size}rem`;
+      balloon.style.animationDuration = `${duration}s`;
+
+      balloonsContainer.appendChild(balloon);
+
+      // Clean up DOM after element finishes floating up
+      setTimeout(() => {
+        balloon.remove();
+      }, duration * 1000);
+    }
+
+    // Spawn balloons continuously
+    setInterval(spawnBalloon, 1200);
+    // Seed initial balloons
+    for (let i = 0; i < 6; i++) {
+      setTimeout(spawnBalloon, i * 400);
+    }
+
+    /* =========================================================================
+       3. INTERACTIVE TOUCH / BUTTON BURST
+       ========================================================================= */
+    function burstConfetti(x = 0.5, y = 0.6) {
+      confetti({
+        particleCount: 70,
+        spread: 90,
+        origin: { x, y },
+        colors: celebrationColors,
+        scalar: 1.1
+      });
+    }
+
+    document.getElementById('boostConfettiBtn').addEventListener('click', (e) => {
+      const rect = e.target.getBoundingClientRect();
+      const x = (rect.left + rect.width / 2) / window.innerWidth;
+      const y = (rect.top + rect.height / 2) / window.innerHeight;
+      burstConfetti(x, y);
+    });
+
+    // Tap anywhere on the card background to pop confetti sparkles
+    document.addEventListener('pointerdown', (e) => {
+      if (e.target.tagName !== 'BUTTON') {
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        confetti({
+          particleCount: 15,
+          spread: 40,
+          origin: { x, y },
+          colors: ['#ff4d6d', '#ffd166', '#c77dff'],
+          scalar: 0.7,
+          startVelocity: 15
+        });
+      }
+    });
+  </script>
+</body>
+</html>
